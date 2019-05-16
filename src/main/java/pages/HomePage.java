@@ -12,7 +12,7 @@ public class HomePage extends BasePage {
     }
 
     //*********Page Variables*********
-    String baseURL = "http://www.n11.com/";
+    String baseURL = "http://automationbykrishna.com/";
 
     //*********Web Elements*********
     String signInButtonClass = "btnSignIn";
@@ -21,14 +21,15 @@ public class HomePage extends BasePage {
     //*********Page Methods*********
 
     //Go to Homepage
-    public void goToN11 (){
-        driver.get(baseURL);
+    public void goToHomePage (){
+       // driver.get(baseURL);
         //driver.navigate().to(baseURL)
+        driver.navigate().to(baseURL);
     }
 
     //Go to LoginPage
     public void goToLoginPage (){
-        click(By.className(signInButtonClass));
+        click(By.xpath("//a[@id='registration2']"));
     }
 
 }

@@ -1,15 +1,19 @@
 package tests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+
 import pages.HomePage;
 import pages.LoginPage;
-import utils.ExtentReports.ExtentTestManager;
+import utils.Listeners.Retry;
 
 import java.lang.reflect.Method;
 
 public class LoginTests extends BaseTest {
+	
 
     // Extra information:
     // 1) @BeforeClass we declared driver and wait variables
@@ -17,10 +21,11 @@ public class LoginTests extends BaseTest {
     //    Homepage homepage = new HomePage(driver,wait);
     // 3) super () method in page class transfer the driver and wait variables values to the BasePage class.
 
-    @Test (priority = 0, description="Invalid Login Scenario with wrong username and password.")
-    public void invalidLoginTest_InvalidUserNameInvalidPassword (Method method) {
+    @Test (priority = 0, description="test1", retryAnalyzer = Retry.class)
+    
+    public void invalidRegistrationTest_InvalidUserNameInvalidPassword (Method method) throws Exception {
         //ExtentReports Description
-        ExtentTestManager.startTest(method.getName(),"Invalid Login Scenario with empty username and password.");
+       // ExtentTestManager.startTest(method.getName(),"Invalid Registration Scenario with wrong username and password.");
 
         //*************PAGE INSTANTIATIONS*************
         HomePage homePage = new HomePage(driver,wait);
@@ -28,39 +33,38 @@ public class LoginTests extends BaseTest {
 
         //*************PAGE METHODS********************
         //Open N11 HomePage
-        homePage.goToN11();
+        homePage.goToHomePage();
 
         //Go to LoginPage
         homePage.goToLoginPage();
 
-        //Login to N11
-        loginPage.loginToN11("onur@swtestacademy.com", "11223344");
+        
+        loginPage.doLogin("Alisha", "test12345");
 
         //*************ASSERTIONS***********************
-        wait.until(ExpectedConditions
-                .visibilityOfAllElementsLocatedBy(By.xpath("//*[@id=\"loginForm\"]/div[2]/div/div ")));
-        loginPage.verifyLoginPassword(("E-posta adresiniz veya şifreniz hatalı"));
+        wait.until(ExpectedConditions.alertIsPresent());
+        loginPage.verifyLoginPassword(("Failed! please enter strong password"));
     }
 
-    @Test (priority = 1, description="Invalid Login Scenario with empty username and password.")
-    public void invalidLoginTest_EmptyUserEmptyPassword (Method method)  {
+    @Test (priority = 1, description="test2",retryAnalyzer = Retry.class)
+    public void invalidRegistrationTest_EmptyUserEmptyPassword (Method method) throws Exception  {
         //ExtentReports Description
-        ExtentTestManager.startTest(method.getName(),"Invalid Login Scenario with empty username and password.");
+       // ExtentTestManager.startTest(method.getName(),"Invalid registration Scenario with empty username and password.");
 
         //*************PAGE INSTANTIATIONS*************
         HomePage homePage = new HomePage(driver,wait);
         LoginPage loginPage = new LoginPage(driver,wait);
 
         //*************PAGE METHODS********************
-        homePage.goToN11();
+        homePage.goToHomePage();
         homePage.goToLoginPage();
-        loginPage.loginToN11("","");
+
+        loginPage.doLogin("","");
 
         //*************ASSERTIONS***********************
-        wait.until(ExpectedConditions
-                .visibilityOfAllElementsLocatedBy(By.xpath("//*[@id=\"loginForm\"]/div[2]/div/div ")));
-        loginPage.verifyLoginUserName("Lütfen e-posta adresinizi girin.");
-        loginPage.verifyLoginPassword("WRONG MESSAGE FOR FAILURE!");
+        wait.until(ExpectedConditions.alertIsPresent());
+        loginPage.verifyLoginUserName("Failed! please enter password");
+        //loginPage.verifyLoginPassword("Failed! please enter password");
     }
 
 }
