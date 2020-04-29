@@ -20,9 +20,9 @@ public class BaseTest {
     @BeforeClass
     public void setup (ITestContext testContext) {
         //Create a Chrome driver. All test classes use this.
-    	System.setProperty("webdriver.chrome.driver", "driver//chromedriver//chromedriver.exe");
+    	System.setProperty("webdriver.chrome.driver", "drivers//chromedriver.exe");
         driver = new ChromeDriver();
-        testContext.setAttribute("WebDriver", this.driver);
+        //testContext.setAttribute("WebDriver", this.driver);
 
         //Create a wait. All test classes use this.
         wait = new WebDriverWait(driver,15);
